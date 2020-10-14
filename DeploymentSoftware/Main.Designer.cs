@@ -27,6 +27,7 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cB_Port = new System.Windows.Forms.ComboBox();
             this.l_Connected = new System.Windows.Forms.Label();
             this.b_Connect = new System.Windows.Forms.Button();
             this.tB_IP = new System.Windows.Forms.TextBox();
@@ -74,7 +75,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.VLCPlayer = new AxAXVLC.AxVLCPlugin2();
             this.button1 = new System.Windows.Forms.Button();
-            this.cB_Port = new System.Windows.Forms.ComboBox();
             this.testing = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -102,6 +102,19 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(328, 130);
             this.panel2.TabIndex = 1;
+            // 
+            // cB_Port
+            // 
+            this.cB_Port.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.cB_Port.FormattingEnabled = true;
+            this.cB_Port.Items.AddRange(new object[] {
+            "4001",
+            "6791"});
+            this.cB_Port.Location = new System.Drawing.Point(95, 59);
+            this.cB_Port.Name = "cB_Port";
+            this.cB_Port.Size = new System.Drawing.Size(220, 28);
+            this.cB_Port.TabIndex = 7;
+            this.cB_Port.Text = "6791";
             // 
             // l_Connected
             // 
@@ -218,7 +231,6 @@
             this.tB_DDE.Name = "tB_DDE";
             this.tB_DDE.Size = new System.Drawing.Size(49, 20);
             this.tB_DDE.TabIndex = 29;
-            this.tB_DDE.TextChanged += new System.EventHandler(this.tB_DDE_TextChanged);
             // 
             // label18
             // 
@@ -245,7 +257,6 @@
             this.tB_Brightness.Name = "tB_Brightness";
             this.tB_Brightness.Size = new System.Drawing.Size(49, 20);
             this.tB_Brightness.TabIndex = 26;
-            this.tB_Brightness.TextChanged += new System.EventHandler(this.tB_Brightness_TextChanged);
             // 
             // label17
             // 
@@ -260,7 +271,7 @@
             // slider_Brightness
             // 
             this.slider_Brightness.Location = new System.Drawing.Point(170, 157);
-            this.slider_Brightness.Maximum = 255;
+            this.slider_Brightness.Maximum = 511;
             this.slider_Brightness.Name = "slider_Brightness";
             this.slider_Brightness.Size = new System.Drawing.Size(143, 45);
             this.slider_Brightness.TabIndex = 24;
@@ -272,7 +283,6 @@
             this.tB_Contrast.Name = "tB_Contrast";
             this.tB_Contrast.Size = new System.Drawing.Size(49, 20);
             this.tB_Contrast.TabIndex = 23;
-            this.tB_Contrast.TextChanged += new System.EventHandler(this.tB_Contrast_TextChanged);
             // 
             // label16
             // 
@@ -301,7 +311,8 @@
             this.cB_AGC.Items.AddRange(new object[] {
             "Manual",
             "Auto 0",
-            "Auto 1"});
+            "Auto 1",
+            "-"});
             this.cB_AGC.Location = new System.Drawing.Point(114, 83);
             this.cB_AGC.Name = "cB_AGC";
             this.cB_AGC.Size = new System.Drawing.Size(200, 26);
@@ -335,7 +346,8 @@
             this.cB_Flip.FormattingEnabled = true;
             this.cB_Flip.Items.AddRange(new object[] {
             "No Flip",
-            "Mirror Flip"});
+            "Mirror Flip",
+            "-"});
             this.cB_Flip.Location = new System.Drawing.Point(115, 53);
             this.cB_Flip.Name = "cB_Flip";
             this.cB_Flip.Size = new System.Drawing.Size(200, 26);
@@ -362,7 +374,8 @@
             "Black Hot",
             "Rainbow1",
             "Rainbow2",
-            "Red Hot"});
+            "Red Hot",
+            "-"});
             this.cB_Palette.Location = new System.Drawing.Point(114, 23);
             this.cB_Palette.Name = "cB_Palette";
             this.cB_Palette.Size = new System.Drawing.Size(201, 26);
@@ -600,7 +613,7 @@
             this.VLCPlayer.Location = new System.Drawing.Point(346, 90);
             this.VLCPlayer.Name = "VLCPlayer";
             this.VLCPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer.OcxState")));
-            this.VLCPlayer.Size = new System.Drawing.Size(500, 400);
+            this.VLCPlayer.Size = new System.Drawing.Size(499, 399);
             this.VLCPlayer.TabIndex = 19;
             // 
             // button1
@@ -613,19 +626,6 @@
             this.button1.Text = "FOR TESTING";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // cB_Port
-            // 
-            this.cB_Port.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.cB_Port.FormattingEnabled = true;
-            this.cB_Port.Items.AddRange(new object[] {
-            "4001",
-            "6791"});
-            this.cB_Port.Location = new System.Drawing.Point(95, 59);
-            this.cB_Port.Name = "cB_Port";
-            this.cB_Port.Size = new System.Drawing.Size(220, 28);
-            this.cB_Port.TabIndex = 7;
-            this.cB_Port.Text = "6791";
             // 
             // testing
             // 
