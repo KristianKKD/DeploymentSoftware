@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -24,7 +24,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        public void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.panel2 = new System.Windows.Forms.Panel();
             this.cB_Port = new System.Windows.Forms.ComboBox();
@@ -75,7 +75,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.VLCPlayer = new AxAXVLC.AxVLCPlugin2();
             this.button1 = new System.Windows.Forms.Button();
-            this.testing = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.p_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_DDE)).BeginInit();
@@ -231,6 +230,8 @@
             this.tB_DDE.Name = "tB_DDE";
             this.tB_DDE.Size = new System.Drawing.Size(49, 20);
             this.tB_DDE.TabIndex = 29;
+            this.tB_DDE.TextChanged += new System.EventHandler(this.tB_DDE_TextChanged);
+            this.tB_DDE.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_DDE_KeyDown);
             // 
             // label18
             // 
@@ -257,6 +258,8 @@
             this.tB_Brightness.Name = "tB_Brightness";
             this.tB_Brightness.Size = new System.Drawing.Size(49, 20);
             this.tB_Brightness.TabIndex = 26;
+            this.tB_Brightness.TextChanged += new System.EventHandler(this.tB_Brightness_TextChanged);
+            this.tB_Brightness.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_Brightness_KeyDown);
             // 
             // label17
             // 
@@ -283,6 +286,8 @@
             this.tB_Contrast.Name = "tB_Contrast";
             this.tB_Contrast.Size = new System.Drawing.Size(49, 20);
             this.tB_Contrast.TabIndex = 23;
+            this.tB_Contrast.TextChanged += new System.EventHandler(this.tB_Contrast_TextChanged);
+            this.tB_Contrast.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_Contrast_KeyDown);
             // 
             // label16
             // 
@@ -613,7 +618,7 @@
             this.VLCPlayer.Location = new System.Drawing.Point(346, 90);
             this.VLCPlayer.Name = "VLCPlayer";
             this.VLCPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer.OcxState")));
-            this.VLCPlayer.Size = new System.Drawing.Size(499, 399);
+            this.VLCPlayer.Size = new System.Drawing.Size(500, 400);
             this.VLCPlayer.TabIndex = 19;
             // 
             // button1
@@ -627,21 +632,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // testing
-            // 
-            this.testing.AutoSize = true;
-            this.testing.Location = new System.Drawing.Point(290, 65);
-            this.testing.Name = "testing";
-            this.testing.Size = new System.Drawing.Size(10, 13);
-            this.testing.TabIndex = 31;
-            this.testing.Text = "t";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(859, 637);
-            this.Controls.Add(this.testing);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.VLCPlayer);
             this.Controls.Add(this.panel1);
@@ -674,55 +669,54 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel p_Control;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button b_Connect;
-        private System.Windows.Forms.TextBox tB_IP;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button b_DDEOff;
-        private System.Windows.Forms.Button b_DDEOn;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label l_Connected;
-        private System.Windows.Forms.ComboBox cB_Palette;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cB_Flip;
-        private System.Windows.Forms.Button b_Play;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label13;
-        private AxAXVLC.AxVLCPlugin2 VLCPlayer;
-        private System.Windows.Forms.CheckBox check_Extend;
-        private System.Windows.Forms.Panel p_Extended;
-        private System.Windows.Forms.Panel p_Basic;
-        private System.Windows.Forms.TextBox tB_Basic_RTSP;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox tB_Extend_Port;
-        private System.Windows.Forms.TextBox tB_Extend_RTSP;
-        private System.Windows.Forms.TextBox tB_Extend_Password;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox tB_Extend_IP;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox tB_Extend_Username;
-        private System.Windows.Forms.TextBox tB_DDE;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TrackBar slider_DDE;
-        private System.Windows.Forms.TextBox tB_Brightness;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TrackBar slider_Brightness;
-        private System.Windows.Forms.TextBox tB_Contrast;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TrackBar slider_Contrast;
-        private System.Windows.Forms.ComboBox cB_AGC;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox cB_Port;
-        private System.Windows.Forms.Label testing;
+        public System.Windows.Forms.Panel panel2;
+        public System.Windows.Forms.Panel p_Control;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Button b_Connect;
+        public System.Windows.Forms.TextBox tB_IP;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Button b_DDEOff;
+        public System.Windows.Forms.Button b_DDEOn;
+        public System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label l_Connected;
+        public System.Windows.Forms.ComboBox cB_Palette;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Label label7;
+        public System.Windows.Forms.ComboBox cB_Flip;
+        public System.Windows.Forms.Button b_Play;
+        public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Label label13;
+        public AxAXVLC.AxVLCPlugin2 VLCPlayer;
+        public System.Windows.Forms.CheckBox check_Extend;
+        public System.Windows.Forms.Panel p_Extended;
+        public System.Windows.Forms.Panel p_Basic;
+        public System.Windows.Forms.TextBox tB_Basic_RTSP;
+        public System.Windows.Forms.Label label14;
+        public System.Windows.Forms.TextBox tB_Extend_Port;
+        public System.Windows.Forms.TextBox tB_Extend_RTSP;
+        public System.Windows.Forms.TextBox tB_Extend_Password;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.TextBox tB_Extend_IP;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.TextBox tB_Extend_Username;
+        public System.Windows.Forms.TextBox tB_DDE;
+        public System.Windows.Forms.Label label18;
+        public System.Windows.Forms.TrackBar slider_DDE;
+        public System.Windows.Forms.TextBox tB_Brightness;
+        public System.Windows.Forms.Label label17;
+        public System.Windows.Forms.TrackBar slider_Brightness;
+        public System.Windows.Forms.TextBox tB_Contrast;
+        public System.Windows.Forms.Label label16;
+        public System.Windows.Forms.TrackBar slider_Contrast;
+        public System.Windows.Forms.ComboBox cB_AGC;
+        public System.Windows.Forms.Label label15;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.ComboBox cB_Port;
     }
 }

@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>SSLogo.ico</ApplicationIcon>
+    <ApplicationIcon>Other\SSLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.AXVLC">
@@ -52,15 +52,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs">
+    <Compile Include="Scripts\CameraCommands.cs" />
+    <Compile Include="Scripts\CameraCommunicate.cs" />
+    <Compile Include="Scripts\Com.cs" />
+    <Compile Include="Scripts\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.Designer.cs">
+    <Compile Include="Scripts\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Scripts\MathStuff.cs" />
+    <Compile Include="Scripts\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Main.resx">
+    <Compile Include="Scripts\UIControl.cs" />
+    <Compile Include="Scripts\VideoPlay.cs" />
+    <EmbeddedResource Include="Scripts\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -83,7 +89,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="Other\App.config" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AxAXVLC">
@@ -105,7 +111,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SSLogo.ico" />
+    <Content Include="Other\SSLogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
