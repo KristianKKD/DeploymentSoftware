@@ -107,7 +107,8 @@ namespace DeploymentSoftware {
             } else {
                 code = new byte[] { 0xAA, 0x05, 0x00, 0x3E, 0x01, 0x00, 0xEE, 0xEB, 0xAA };
             }
-
+            CameraCommunicate.SendToSocket(code);
+            
             uiRef.ddeOn = state;
             uiRef.UpdateUI();
         }
@@ -115,7 +116,7 @@ namespace DeploymentSoftware {
         public static void ChangeContrast(int contrast) { //WORKING
             byte contrastInByte = (byte)MathStuff.ConvertToHex(contrast);
             int checksum = 0;
-            byte[] checksumWithoutVal = new byte[] { 170, 0x05, 0x00, 0x3B, 0x01, contrastInByte };
+            byte[] checksumWithoutVal = new byte[] { 0xAA, 0x05, 0x00, 0x3B, 0x01, contrastInByte };
             for (int i = 0; i < checksumWithoutVal.Length; i++) {
                 checksum += Convert.ToInt32(checksumWithoutVal[i]);
             }
@@ -127,22 +128,47 @@ namespace DeploymentSoftware {
             CameraCommunicate.GetResponseManual(code);
         }
 
-        public static void ChangeBrightness(int bright) {
+        public static void ChangeBrightness(int bright) { //THIS ONE WONT WORK, NEED TO DO 2 VALUES
             int val1 = 0;
             int val2 = bright;
             if (val2 > 255) {
                 val1 = 1;
                 val2 = val2 - 255;
             }
-            //CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x06, 0x00, 0x3C, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x01, 0x1A, 0xEB, 0xAA });
-            MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x1A, 0xEB, 0xAA }).Result);
+            ////CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x06, 0x00, 0x3C, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x01, 0x1A, 0xEB, 0xAA });
+            //MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x1A, 0xEB, 0xAA }).Result);
+
+            byte val1Byte = (byte)MathStuff.ConvertToHex(val1);
+            byte val2Byte = (byte)MathStuff.ConvertToHex(val2);
+            int checksum = 0;
+            byte[] checksumWithoutVal = new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, val1Byte, val2Byte };
+            for (int i = 0; i < checksumWithoutVal.Length; i++) {
+                checksum += Convert.ToInt32(checksumWithoutVal[i]);
+            }
+            checksum = checksum % 256;
+
+            byte[] code = new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, val2Byte, val1Byte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
+            CameraCommunicate.GetResponseManual(code);
+
         }
 
         public static void ChangeDDELevel(int DDE) {
-            //CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE), 0xF2, 0xEB, 0xAA });
+            ////CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE), 0xF2, 0xEB, 0xAA });
 
-            MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE),
-                (byte)MathStuff.ConvertToHex(((170 + 6 + 60 + 1 + DDE)%256)), 0xEB, 0xAA }).Result);
+            //MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE),
+            //    (byte)MathStuff.ConvertToHex(((170 + 6 + 60 + 1 + DDE)%256)), 0xEB, 0xAA }).Result);
+
+            byte DDEInByte = (byte)MathStuff.ConvertToHex(DDE);
+            int checksum = 0;
+            byte[] checksumWithoutVal = new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, DDEInByte };
+            for (int i = 0; i < checksumWithoutVal.Length; i++) {
+                checksum += Convert.ToInt32(checksumWithoutVal[i]);
+            }
+            checksum = checksum % 256;
+
+
+            byte[] code = new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, DDEInByte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
+            CameraCommunicate.GetResponseManual(code);
 
         }
 
@@ -243,7 +269,11 @@ namespace DeploymentSoftware {
             if (isBoolType) {
                 command.bValue = MathStuff.ConvertToBool(returnedValue);
             } else {
-                command.iValue = MathStuff.ConvertToInt(returnedValue);
+                if (command.duoVal) {
+                    command.iValue = MathStuff.ConvertToInt(returnedValue, true);
+                } else {
+                    command.iValue = MathStuff.ConvertToInt(returnedValue);
+                }
             }
             //MessageBox.Show(command.iValue.ToString());
 

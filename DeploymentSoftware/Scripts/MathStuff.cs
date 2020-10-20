@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DeploymentSoftware {
 
     class MathStuff {
 
-        public static int ConvertToInt(string code, bool doubleValue = false) {
+        public static int ConvertToInt(string code, bool doubleValue = false) { //displaying the brightness dont work
             int num1 = 0;
             int num2 = 0;
 
@@ -16,8 +17,11 @@ namespace DeploymentSoftware {
             num1 = int.Parse(valueCode, System.Globalization.NumberStyles.HexNumber);
 
             if (doubleValue) {
-                string valueCode2 = code.Substring(3, 2);
+                string valueCode2 = code.Substring(2, 2);
                 num2 = int.Parse(valueCode2, System.Globalization.NumberStyles.HexNumber);
+                if (num1 > 0) {
+                    num1 = 255;
+                }
             }
             int total = num1 + num2;
 
