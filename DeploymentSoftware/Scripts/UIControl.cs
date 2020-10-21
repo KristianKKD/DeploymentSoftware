@@ -31,13 +31,17 @@ namespace DeploymentSoftware {
             mainRef.slider_Brightness.Value = brightLevel;
             mainRef.slider_Contrast.Value = contrastLevel;
             mainRef.slider_DDE.Value = ddeLevel;
-            mainRef.slider_Zoom.Value = digitalZoom / 100;
+
+            mainRef.slider_Zoom.Value = digitalZoom / 50;
 
             mainRef.tB_Brightness.Text = brightLevel.ToString();
             mainRef.tB_Contrast.Text = contrastLevel.ToString();
             mainRef.tB_DDE.Text = ddeLevel.ToString();
-            //mainRef.tB_Zoom.Text = (digitalZoom / 100).ToString();
-            MessageBox.Show("AA" + (digitalZoom / 100).ToString());
+
+            mainRef.tB_Zoom.Text = (digitalZoom / 100f).ToString();
+
+            if(digitalZoom / 100f < 1)
+                mainRef.tB_Zoom.Text = (digitalZoom / 2f).ToString();
 
             switch (paletteMode) {
                 case 0:
@@ -53,6 +57,15 @@ namespace DeploymentSoftware {
                     mainRef.cB_Palette.SelectedIndex = 3;
                     break;
                 case 11:
+                    mainRef.cB_Palette.SelectedIndex = 4;
+                    break;
+                case 2:
+                    mainRef.cB_Palette.SelectedIndex = 2;
+                    break;
+                case 3:
+                    mainRef.cB_Palette.SelectedIndex = 3;
+                    break;
+                case 4:
                     mainRef.cB_Palette.SelectedIndex = 4;
                     break;
                 default:
@@ -104,7 +117,6 @@ namespace DeploymentSoftware {
                 mainRef.b_DDEOn.Enabled = true;
             }
 
-
             mainRef.tB_DDE.Enabled = ddeOn;
             mainRef.slider_DDE.Enabled = ddeOn;
 
@@ -123,57 +135,46 @@ namespace DeploymentSoftware {
                 );
         }
 
-        public void KeepUpdated(TextBox tb, TrackBar slider, int variable) {
+        public void KeepUpdated(TextBox tb, TrackBar slider, int variable, bool halfIt = false) {
+            
             if (tb.Text == "") {
                 return;
             }
-            bool success = int.TryParse(tb.Text, out int converted);
-            //if (converted == int.Parse(tb.Text) && slider.Value == slider.Value) {
-            //    return;
-            //}
-            if (success && converted > -1 && converted < slider.Maximum + 1) {
-                slider.Value = converted;
-            } else {
-                tb.Text = variable.ToString();
-            }
-        }
 
-        public void RTBKeepUpdated(RichTextBox tb, TrackBar slider, int variable) {
-            if (tb.Text == "") {
-                return;
+            if (halfIt) {
+                bool success = float.TryParse(tb.Text, out float convertedFloat);
+
+                if (success && convertedFloat > -1 && convertedFloat < 8f + 1) {
+                    slider.Value = Convert.ToInt32(convertedFloat * 2);
+                } else {
+                    tb.Text = variable.ToString();
+                }
             }
-            bool success = int.TryParse(tb.Text, out int converted);
-            //if (converted == int.Parse(tb.Text) && slider.Value == slider.Value) {
-            //    return;
-            //}
-            if (success && converted > -1 && converted < slider.Maximum + 1) {
-                slider.Value = converted;
-            } else {
-                tb.Text = variable.ToString();
+            else { 
+                bool success = int.TryParse(tb.Text, out int converted);
+
+                if (success && converted > -1 && converted < slider.Maximum + 1) {
+                    slider.Value = converted;
+                } else {
+                    tb.Text = variable.ToString();
+                }
             }
         }
 
         public int ChangeVal(TrackBar slider, TextBox tb, int copyVar, bool half = false) {
-            if (!half) {
-                copyVar /= 2;
-            }
 
             if (slider.Value != copyVar) {
                 copyVar = slider.Value;
             }
-            tb.Text = copyVar.ToString();
-            return copyVar;
-        }
 
-        public int RTBChangeVal(TrackBar slider, RichTextBox tb, int copyVar, bool half = false) {
-            if (!half) {
-                copyVar /= 2;
+            if (half) {
+                tb.Text = (copyVar/2f).ToString();
+            }
+            else {
+                tb.Text = copyVar.ToString();
             }
 
-            if (slider.Value != copyVar) {
-                copyVar = slider.Value;
-            }
-            tb.Text = copyVar.ToString();
+
             return copyVar;
         }
 

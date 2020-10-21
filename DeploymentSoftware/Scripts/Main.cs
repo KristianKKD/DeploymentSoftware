@@ -44,8 +44,7 @@ namespace DeploymentSoftware {
 
         async Task Do() {
             await GetData();
-            if (!VLCPlayer.playlist.isPlaying)
-                playScript.Play(tB_IP.Text);
+            playScript.Play(tB_IP.Text);
         }
 
         async Task GetData() {
@@ -105,7 +104,7 @@ namespace DeploymentSoftware {
         }
 
         private void tB_Zoom_TextChanged(object sender, EventArgs e) {
-            uiRef.KeepUpdated(tB_Zoom, slider_Zoom, uiRef.digitalZoom);
+            uiRef.KeepUpdated(tB_Zoom, slider_Zoom, uiRef.digitalZoom, true);
         }
 
         private void tB_Contrast_TextChanged(object sender, EventArgs e) {
@@ -122,6 +121,7 @@ namespace DeploymentSoftware {
 
         private void tB_Zoom_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter)
+                uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom, true);
                 CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
         }
 
@@ -139,7 +139,6 @@ namespace DeploymentSoftware {
             if (e.KeyCode == Keys.Enter)
                 CameraCommands.ChangeDDELevel(uiRef.ddeLevel);
         }
-
 
     }
 }

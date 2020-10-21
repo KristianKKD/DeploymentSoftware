@@ -26,7 +26,7 @@ namespace DeploymentSoftware {
                 }
                 //MessageBox.Show(code + " 1: " + num1.ToString() + " 2: " + num2.ToString() + "\n" + (num1 + num2).ToString());
                 //MessageBox.Show(code);
-                MessageBox.Show((num1 + num2).ToString());
+                //MessageBox.Show((num1 + num2).ToString());
             }
             int total = num1 + num2;
             return total;

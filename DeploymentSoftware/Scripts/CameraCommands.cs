@@ -118,7 +118,7 @@ namespace DeploymentSoftware {
 
             CameraCommunicate.SendToSocket(code);
 
-            uiRef.digitalZoom = zoom;
+            //uiRef.digitalZoom = zoom;
         }
 
 
@@ -179,8 +179,6 @@ namespace DeploymentSoftware {
             return code;
         }
 
-
-
         public static void ChangeContrast(int contrast) { //WORKING
             byte contrastInByte = (byte)MathStuff.ConvertToHex(contrast);
             int checksum = 0;
@@ -192,7 +190,7 @@ namespace DeploymentSoftware {
 
 
             byte[] code = new byte[] { 0xAA, 0x05, 0x00, 0x3B, 0x01, contrastInByte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
-            Com changeContrast = new Com(code, Com.contrastChangedResponse, 9); //might need to verify the command
+            //Com changeContrast = new Com(code, Com.contrastChangedResponse, 9); //might need to verify the command
             CameraCommunicate.GetResponseManual(code);
         }
 
@@ -231,7 +229,6 @@ namespace DeploymentSoftware {
 
             byte[] code = new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, DDEInByte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
             CameraCommunicate.GetResponseManual(code);
-
         }
 
         //reading commands
@@ -245,45 +242,51 @@ namespace DeploymentSoftware {
         static Com agcO = new Com(Com.agcOnCommand, Com.agcOnResponse, 9);
         static Com zoomR = new Com(Com.readZoom, Com.readZoomResonse, 9, true);
 
+        static bool failed = false;
+
         public static async Task GetCameraStuff() {
 
-            if (CameraCommunicate.sock.Connected) { 
+            if (CameraCommunicate.sock.Connected) {
                 CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x01, 0x3D, 0x02, 0x01, 0xF0, 0xEB, 0xAA }); //enables analogue video
-
-                SendCommand(contra);
-                uiRef.contrastLevel = contra.iValue;
-
-                SendCommand(bright);
-                uiRef.brightLevel = bright.iValue;
-
-                SendCommand(palM);
-                uiRef.paletteMode = palM.iValue;
-
-                SendCommand(flipM);
-                uiRef.flipMode = flipM.iValue;
-
-                SendCommand(agcM);
-                uiRef.agcMode = agcM.iValue;
-
-                SendCommand(ddeL);
-                uiRef.ddeLevel = ddeL.iValue;
-
-                SendCommand(ddeO, true);
-                uiRef.ddeOn = ddeO.bValue;
-
                 
-                MessageBox.Show(CameraCommunicate.GetResponseManual(zoomR.sendCommand).Result);
+                failed = true;
+                int retryCount = 0;
+                while (failed && retryCount < 3) {
+                    failed = false;
+                    
+                    SendCommand(contra);
+                    uiRef.contrastLevel = contra.iValue;
 
-                SendCommand(zoomR);
-                MessageBox.Show(zoomR.iValue.ToString());
-                uiRef.digitalZoom = zoomR.iValue;
+                    SendCommand(bright);
+                    uiRef.brightLevel = bright.iValue;
 
+                    SendCommand(palM);
+                    uiRef.paletteMode = palM.iValue;
 
-                //SendCommand(agcO, true);
-                //uiRef.agcOn = agcO.bValue;
+                    SendCommand(flipM);
+                    uiRef.flipMode = flipM.iValue;
+
+                    SendCommand(agcM);
+                    uiRef.agcMode = agcM.iValue;
+
+                    SendCommand(ddeL);
+                    uiRef.ddeLevel = ddeL.iValue;
+
+                    SendCommand(ddeO, true);
+                    uiRef.ddeOn = ddeO.bValue;
+
+                    SendCommand(zoomR);
+                    uiRef.digitalZoom = zoomR.iValue;
+
+                    if (failed) {
+                        retryCount++;
+                        MessageBox.Show("Failed to collect data, retrying..." + retryCount + "/3");
+                    }
+                }
 
             }
         }
+
 
         public static async Task<Com> SendCommand(Com command, bool isBoolType = false) {
             string expected = PerfectFormat(command).Result.ToUpper();
@@ -295,8 +298,8 @@ namespace DeploymentSoftware {
 
             while (!isGood) {
                 savedWrongCount++;
-                if (savedWrongCount > 10) {
-                    MessageBox.Show("Failed to collect data");
+                if (savedWrongCount > 3) {
+                    failed = true;
                     break;
                 }
 

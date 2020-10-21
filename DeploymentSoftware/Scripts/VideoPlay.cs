@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DeploymentSoftware {
 
@@ -14,7 +15,7 @@ namespace DeploymentSoftware {
             string combinedUrl;
             
             if (ConnectIP != "") {
-                combinedUrl = "rtsp://admin:admin@" + ConnectIP + ":6791/videoinput_1:0/h264_1/onvif.stm";
+                combinedUrl = "rtsp://admin:admin@" + ConnectIP + ":554/videoinput_1:0/h264_1/onvif.stm";
             } else {
                 if (mainRef.check_Extend.Checked) {
                     string ipaddress = mainRef.tB_Extend_IP.Text;
@@ -28,9 +29,6 @@ namespace DeploymentSoftware {
                     combinedUrl = mainRef.tB_Basic_RTSP.Text;
                 }
             }
-            //rtsp://admin:admin@192.168.1.74:6791/videoinput_1:0/h264_1/onvif.stm
-            //rtsp://admin:admin@192.168.1.74:554/videoinput_1:0/h264_1/onvif.stm
-
 
             Uri combined = new Uri(combinedUrl);
             if (!CameraCommunicate.PingAdr(combined.Host, combined.Port).Result) {

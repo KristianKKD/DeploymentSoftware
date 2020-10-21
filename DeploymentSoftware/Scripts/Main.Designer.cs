@@ -35,6 +35,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.tB_Zoom = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.slider_Zoom = new System.Windows.Forms.TrackBar();
             this.b_DDEOff = new System.Windows.Forms.Button();
@@ -76,7 +77,6 @@
             this.check_Extend = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.VLCPlayer = new AxAXVLC.AxVLCPlugin2();
-            this.tB_Zoom = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.p_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).BeginInit();
@@ -183,7 +183,6 @@
             this.p_Control.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.p_Control.Controls.Add(this.tB_Zoom);
             this.p_Control.Controls.Add(this.label19);
-            this.p_Control.Controls.Add(this.slider_Zoom);
             this.p_Control.Controls.Add(this.b_DDEOff);
             this.p_Control.Controls.Add(this.b_DDEOn);
             this.p_Control.Controls.Add(this.tB_DDE);
@@ -202,11 +201,21 @@
             this.p_Control.Controls.Add(this.label6);
             this.p_Control.Controls.Add(this.cB_Palette);
             this.p_Control.Controls.Add(this.label5);
+            this.p_Control.Controls.Add(this.slider_Zoom);
             this.p_Control.Enabled = false;
             this.p_Control.Location = new System.Drawing.Point(12, 226);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(328, 314);
             this.p_Control.TabIndex = 2;
+            // 
+            // tB_Zoom
+            // 
+            this.tB_Zoom.Location = new System.Drawing.Point(115, 123);
+            this.tB_Zoom.Name = "tB_Zoom";
+            this.tB_Zoom.Size = new System.Drawing.Size(49, 20);
+            this.tB_Zoom.TabIndex = 32;
+            this.tB_Zoom.TextChanged += new System.EventHandler(this.tB_Zoom_TextChanged);
+            this.tB_Zoom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_Zoom_KeyDown);
             // 
             // label19
             // 
@@ -464,9 +473,9 @@
             this.panel1.Controls.Add(this.check_Extend);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.b_Play);
-            this.panel1.Location = new System.Drawing.Point(11, 546);
+            this.panel1.Location = new System.Drawing.Point(11, 560);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(834, 132);
+            this.panel1.Size = new System.Drawing.Size(834, 130);
             this.panel1.TabIndex = 18;
             // 
             // p_Extended
@@ -636,9 +645,9 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(-1, -1);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(141, 25);
+            this.label13.Size = new System.Drawing.Size(218, 25);
             this.label13.TabIndex = 19;
-            this.label13.Text = "Video Stream";
+            this.label13.Text = "Manual Video Stream";
             // 
             // VLCPlayer
             // 
@@ -649,18 +658,11 @@
             this.VLCPlayer.Size = new System.Drawing.Size(500, 400);
             this.VLCPlayer.TabIndex = 19;
             // 
-            // tB_Zoom
-            // 
-            this.tB_Zoom.Location = new System.Drawing.Point(115, 123);
-            this.tB_Zoom.Name = "tB_Zoom";
-            this.tB_Zoom.Size = new System.Drawing.Size(49, 20);
-            this.tB_Zoom.TabIndex = 32;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 544);
+            this.ClientSize = new System.Drawing.Size(859, 548);
             this.Controls.Add(this.VLCPlayer);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
