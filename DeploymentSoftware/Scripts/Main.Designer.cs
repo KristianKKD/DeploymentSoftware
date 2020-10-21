@@ -35,7 +35,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.p_Control = new System.Windows.Forms.Panel();
-            this.tB_Zoom = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.slider_Zoom = new System.Windows.Forms.TrackBar();
             this.b_DDEOff = new System.Windows.Forms.Button();
@@ -77,6 +76,7 @@
             this.check_Extend = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
             this.VLCPlayer = new AxAXVLC.AxVLCPlugin2();
+            this.tB_Zoom = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.p_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).BeginInit();
@@ -208,15 +208,6 @@
             this.p_Control.Size = new System.Drawing.Size(328, 314);
             this.p_Control.TabIndex = 2;
             // 
-            // tB_Zoom
-            // 
-            this.tB_Zoom.Location = new System.Drawing.Point(115, 122);
-            this.tB_Zoom.Name = "tB_Zoom";
-            this.tB_Zoom.Size = new System.Drawing.Size(49, 20);
-            this.tB_Zoom.TabIndex = 32;
-            this.tB_Zoom.TextChanged += new System.EventHandler(this.tB_Zoom_TextChanged);
-            this.tB_Zoom.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_Zoom_KeyDown);
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
@@ -230,11 +221,13 @@
             // slider_Zoom
             // 
             this.slider_Zoom.Location = new System.Drawing.Point(170, 122);
-            this.slider_Zoom.Maximum = 255;
+            this.slider_Zoom.Maximum = 16;
+            this.slider_Zoom.Minimum = 2;
             this.slider_Zoom.Name = "slider_Zoom";
             this.slider_Zoom.Size = new System.Drawing.Size(145, 45);
             this.slider_Zoom.TabIndex = 30;
             this.slider_Zoom.TickFrequency = 2;
+            this.slider_Zoom.Value = 2;
             this.slider_Zoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_Zoom_MouseUp);
             // 
             // b_DDEOff
@@ -653,8 +646,15 @@
             this.VLCPlayer.Location = new System.Drawing.Point(346, 101);
             this.VLCPlayer.Name = "VLCPlayer";
             this.VLCPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer.OcxState")));
-            this.VLCPlayer.Size = new System.Drawing.Size(499, 399);
+            this.VLCPlayer.Size = new System.Drawing.Size(500, 400);
             this.VLCPlayer.TabIndex = 19;
+            // 
+            // tB_Zoom
+            // 
+            this.tB_Zoom.Location = new System.Drawing.Point(115, 123);
+            this.tB_Zoom.Name = "tB_Zoom";
+            this.tB_Zoom.Size = new System.Drawing.Size(49, 20);
+            this.tB_Zoom.TabIndex = 32;
             // 
             // Main
             // 
@@ -741,8 +741,8 @@
         public System.Windows.Forms.ComboBox cB_AGC;
         public System.Windows.Forms.Label label15;
         public System.Windows.Forms.ComboBox cB_Port;
-        public System.Windows.Forms.TextBox tB_Zoom;
         public System.Windows.Forms.Label label19;
         public System.Windows.Forms.TrackBar slider_Zoom;
+        public System.Windows.Forms.TextBox tB_Zoom;
     }
 }

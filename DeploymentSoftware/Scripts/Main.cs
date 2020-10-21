@@ -39,8 +39,13 @@ namespace DeploymentSoftware {
         }
 
         private void b_Connect_Click(object sender, EventArgs e) {
-            GetData();
-            playScript.Play(tB_IP.Text);
+            Do();
+        }
+
+        async Task Do() {
+            await GetData();
+            if (!VLCPlayer.playlist.isPlaying)
+                playScript.Play(tB_IP.Text);
         }
 
         async Task GetData() {
@@ -95,7 +100,7 @@ namespace DeploymentSoftware {
         }
 
         private void slider_Zoom_MouseUp(object sender, MouseEventArgs e) {
-            uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom);
+            uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom, true);
             CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
         }
 

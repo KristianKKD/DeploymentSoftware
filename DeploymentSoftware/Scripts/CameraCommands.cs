@@ -124,6 +124,8 @@ namespace DeploymentSoftware {
 
         static byte[] QuickFindZoom(int zoom) {
 
+            zoom = zoom - 2; //because i made a mistake in setting it up
+
             byte[] code = new byte[17];
 
             switch (zoom) {
@@ -212,8 +214,8 @@ namespace DeploymentSoftware {
             checksum = checksum % 256;
 
             byte[] code = new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, val2Byte, val1Byte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
-            MessageBox.Show(val2Byte.ToString() + " " + val2Byte.ToString() + " " + MathStuff.ConvertToHex(checksum).ToString());
-            MessageBox.Show(CameraCommunicate.GetResponseManual(code).Result);
+            //MessageBox.Show(val2Byte.ToString() + " " + val2Byte.ToString() + " " + MathStuff.ConvertToHex(checksum).ToString());
+            CameraCommunicate.GetResponseManual(code);
 
         }
 
@@ -241,6 +243,7 @@ namespace DeploymentSoftware {
         static Com ddeL = new Com(Com.ddeLevelCommand, Com.ddeLevelResponse, 9);
         static Com ddeO = new Com(Com.ddeStateCommand, Com.ddeOnResponse, 9);
         static Com agcO = new Com(Com.agcOnCommand, Com.agcOnResponse, 9);
+        static Com zoomR = new Com(Com.readZoom, Com.readZoomResonse, 9, true);
 
         public static async Task GetCameraStuff() {
 
@@ -267,6 +270,14 @@ namespace DeploymentSoftware {
 
                 SendCommand(ddeO, true);
                 uiRef.ddeOn = ddeO.bValue;
+
+                
+                MessageBox.Show(CameraCommunicate.GetResponseManual(zoomR.sendCommand).Result);
+
+                SendCommand(zoomR);
+                MessageBox.Show(zoomR.iValue.ToString());
+                uiRef.digitalZoom = zoomR.iValue;
+
 
                 //SendCommand(agcO, true);
                 //uiRef.agcOn = agcO.bValue;
@@ -310,6 +321,8 @@ namespace DeploymentSoftware {
                         //MessageBox.Show("Num: " + i.ToString() + " char: " + returnedValue[i] + "\nIs: " + expected[i].ToString() + " Should be: " + responseArray[i].ToString() +  "\n" + response.ToString() + "\n vs \n" + converted);
                         if (i == rightSpot && wrongCount == 0) {
                             if (command.duoVal) {
+                                //MessageBox.Show("full response vs expected\n" + response.ToString() + "\n" + converted + "\nchar " + rightSpot + " = " + response[rightSpot].ToString());
+
                                 returnedValue = response[i].ToString() + response[i + 1].ToString()
                                     + response[i+2].ToString() + response[i + 3].ToString();
                             } else {

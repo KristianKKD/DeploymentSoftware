@@ -30,7 +30,7 @@ namespace DeploymentSoftware {
         public static string[] ddeLevelResponse = new string[] { "55", "05", "00", "3F", "33", "CE", "EB", "AA" };
         public static string[] ddeOnResponse = new string[] { "55", "05", "00", "3E", "33", "CC", "EB", "AA" };
         public static string[] agcOnResponse = new string[] { "AA", "04", "00", "3A", "33", "00", "E8", "EB", "AA" };
-        public static string[] readZoomResonse = new string[] { "55", "06", "00", "2A", "33", "64", "00", "1C", "EB", "AA" };
+        public static string[] readZoomResonse = new string[] { "55", "06", "00", "2A", "33", "EB", "AA" };
 
         //set
         public static string[] contrastChangedResponse = new string[] { "55", "05", "00", "3B", "33", "C9", "EB", "AA" };
@@ -38,9 +38,6 @@ namespace DeploymentSoftware {
         public static string[] ddeLevelChangedResponse = new string[] { "55", "05", "00", "3F", "33", "CD", "EB", "AA" };
         public static string[] zoomChangedResponse = new string[] { "55", "05", "00", "2A", "33", "B8", "EB", "AA" };
 
-
-
-        //public static string[] zoomResponse = new string[] { "AA", "04", "00", "3A", "33", "00", "E8", "EB", "AA" };
 
         public int iValue;
         public bool bValue;
