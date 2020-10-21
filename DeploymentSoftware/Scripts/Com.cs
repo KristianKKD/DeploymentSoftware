@@ -18,10 +18,7 @@ namespace DeploymentSoftware {
         public static byte[] ddeLevelCommand = new byte[] { 0xAA, 0x04, 0x00, 0x3F, 0x00, 0xED, 0xEB, 0xAA };
         public static byte[] ddeStateCommand = new byte[] { 0xAA, 0x04, 0x00, 0x3E, 0x00, 0xEC, 0xEB, 0xAA };
         public static byte[] agcOnCommand = new byte[] { 0xAA, 0x04, 0x00, 0x3E, 0x33, 0x00, 0xE8, 0xEB, 0xAA };
-
-
-        //set
-       
+        public static byte[] readZoom = new byte[] { 0xAA, 0x04, 0x00, 0x2A, 0x00, 0xD8, 0xEB, 0xAA };
 
     //expected receive commands
     //read
@@ -33,11 +30,17 @@ namespace DeploymentSoftware {
         public static string[] ddeLevelResponse = new string[] { "55", "05", "00", "3F", "33", "CE", "EB", "AA" };
         public static string[] ddeOnResponse = new string[] { "55", "05", "00", "3E", "33", "CC", "EB", "AA" };
         public static string[] agcOnResponse = new string[] { "AA", "04", "00", "3A", "33", "00", "E8", "EB", "AA" };
+        public static string[] readZoomResonse = new string[] { "55", "06", "00", "2A", "33", "64", "00", "1C", "EB", "AA" };
 
         //set
         public static string[] contrastChangedResponse = new string[] { "55", "05", "00", "3B", "33", "C9", "EB", "AA" };
         public static string[] brightnessChangedResponse = new string[] { "55", "05", "00", "3C", "33", "CA", "EB", "AA" };
         public static string[] ddeLevelChangedResponse = new string[] { "55", "05", "00", "3F", "33", "CD", "EB", "AA" };
+        public static string[] zoomChangedResponse = new string[] { "55", "05", "00", "2A", "33", "B8", "EB", "AA" };
+
+
+
+        //public static string[] zoomResponse = new string[] { "AA", "04", "00", "3A", "33", "00", "E8", "EB", "AA" };
 
         public int iValue;
         public bool bValue;

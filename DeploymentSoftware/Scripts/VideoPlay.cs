@@ -10,20 +10,27 @@ namespace DeploymentSoftware {
 
         public static Main mainRef;
 
-        public async Task Play() {
+        public async Task Play(string ConnectIP = "") {
             string combinedUrl;
-
-            if (mainRef.check_Extend.Checked) {
-                string ipaddress = mainRef.tB_Extend_IP.Text;
-                string port = mainRef.tB_Extend_Port.Text;
-                string url = mainRef.tB_Extend_RTSP.Text;
-                string username = mainRef.tB_Extend_Username.Text;
-                string password = mainRef.tB_Extend_Password.Text;
-
-                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + url;
+            
+            if (ConnectIP != "") {
+                combinedUrl = "rtsp://admin:admin@" + ConnectIP + ":6791/videoinput_1:0/h264_1/onvif.stm";
             } else {
-                combinedUrl = mainRef.tB_Basic_RTSP.Text;
+                if (mainRef.check_Extend.Checked) {
+                    string ipaddress = mainRef.tB_Extend_IP.Text;
+                    string port = mainRef.tB_Extend_Port.Text;
+                    string url = mainRef.tB_Extend_RTSP.Text;
+                    string username = mainRef.tB_Extend_Username.Text;
+                    string password = mainRef.tB_Extend_Password.Text;
+
+                    combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + url;
+                } else {
+                    combinedUrl = mainRef.tB_Basic_RTSP.Text;
+                }
             }
+            //rtsp://admin:admin@192.168.1.74:6791/videoinput_1:0/h264_1/onvif.stm
+            //rtsp://admin:admin@192.168.1.74:554/videoinput_1:0/h264_1/onvif.stm
+
 
             Uri combined = new Uri(combinedUrl);
             if (!CameraCommunicate.PingAdr(combined.Host, combined.Port).Result) {

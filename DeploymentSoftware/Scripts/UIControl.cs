@@ -17,6 +17,8 @@ namespace DeploymentSoftware {
         public int flipMode = 0;
         public int agcMode = 0;
 
+        public int digitalZoom = 0;
+
         public bool ddeOn = false;
 
         public bool stopUpdates;
@@ -132,7 +134,11 @@ namespace DeploymentSoftware {
             }
         }
 
-        public int ChangeVal(TrackBar slider, TextBox tb, int copyVar) {
+        public int ChangeVal(TrackBar slider, TextBox tb, int copyVar, bool half = false) {
+            if (!half) {
+                copyVar /= 2;
+            }
+
             if (slider.Value != copyVar) {
                 copyVar = slider.Value;
             }
@@ -160,8 +166,6 @@ namespace DeploymentSoftware {
             mainRef.l_Connected.Text = "Connected";
             mainRef.p_Control.Enabled = true;
         }
-
-
         
 
     }

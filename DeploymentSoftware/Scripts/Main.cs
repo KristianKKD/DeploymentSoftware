@@ -18,15 +18,15 @@ namespace DeploymentSoftware {
 
 
         VideoPlay playScript = new VideoPlay();
-        UIControl uiScript = new UIControl();
+        UIControl uiRef = new UIControl();
 
         public Main() {
             InitializeComponent();
             
-            CameraCommands.uiRef = uiScript;
+            CameraCommands.uiRef = uiRef;
             CameraCommands.mainRef = this;
 
-            CameraCommunicate.uiRef = uiScript;
+            CameraCommunicate.uiRef = uiRef;
 
             UIControl.mainRef = this;
 
@@ -40,6 +40,7 @@ namespace DeploymentSoftware {
 
         private void b_Connect_Click(object sender, EventArgs e) {
             GetData();
+            playScript.Play(tB_IP.Text);
         }
 
         async Task GetData() {
@@ -47,7 +48,7 @@ namespace DeploymentSoftware {
                 await CameraCommunicate.Connect(tB_IP.Text, cB_Port.Text);
             }
             await CameraCommands.GetCameraStuff();
-            uiScript.UpdateUI();
+            uiRef.UpdateUI();
         }
 
         private void b_DDEOn_Click(object sender, EventArgs e) {
@@ -71,7 +72,7 @@ namespace DeploymentSoftware {
         }
 
         private void check_Extend_CheckedChanged(object sender, EventArgs e) {
-            uiScript.ShowExtended();
+            uiRef.ShowExtended();
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
@@ -79,65 +80,61 @@ namespace DeploymentSoftware {
         }
 
         private void slider_Contrast_MouseUp(object sender, MouseEventArgs e) {
-            ContrastChanged();
+            uiRef.contrastLevel = uiRef.ChangeVal(slider_Contrast, tB_Contrast, uiRef.contrastLevel);
+            CameraCommands.ChangeContrast(uiRef.contrastLevel);
         }
 
         private void slider_Brightness_MouseUp(object sender, MouseEventArgs e) {
-            BrightnessChanged();
+            uiRef.brightLevel = uiRef.ChangeVal(slider_Brightness, tB_Brightness, uiRef.brightLevel);
+            CameraCommands.ChangeBrightness(uiRef.brightLevel);
         }
 
         private void slider_DDE_MouseUp(object sender, MouseEventArgs e) {
-            DDEChanged();
+            uiRef.ddeLevel = uiRef.ChangeVal(slider_DDE, tB_DDE, uiRef.ddeLevel);
+            CameraCommands.ChangeDDELevel(uiRef.ddeLevel);
         }
 
-        void ContrastChanged() {
-            uiScript.contrastLevel = uiScript.ChangeVal(slider_Contrast, tB_Contrast, uiScript.contrastLevel);
-            CameraCommands.ChangeContrast(uiScript.contrastLevel);
+        private void slider_Zoom_MouseUp(object sender, MouseEventArgs e) {
+            uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom);
+            CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
         }
 
-        void BrightnessChanged() {
-            uiScript.brightLevel = uiScript.ChangeVal(slider_Brightness, tB_Brightness, uiScript.brightLevel);
-            CameraCommands.ChangeBrightness(uiScript.brightLevel);
-        }
-
-        void DDEChanged() {
-            uiScript.ddeLevel = uiScript.ChangeVal(slider_DDE, tB_DDE, uiScript.ddeLevel);
-            CameraCommands.ChangeDDELevel(uiScript.ddeLevel);
-        }
-
-
-        private void button1_Click(object sender, EventArgs e) {
-            p_Control.Enabled = true;
-            uiScript.Display();
-
+        private void tB_Zoom_TextChanged(object sender, EventArgs e) {
+            uiRef.KeepUpdated(tB_Zoom, slider_Zoom, uiRef.digitalZoom);
         }
 
         private void tB_Contrast_TextChanged(object sender, EventArgs e) {
-            uiScript.KeepUpdated(tB_Contrast, slider_Contrast, uiScript.contrastLevel);
+            uiRef.KeepUpdated(tB_Contrast, slider_Contrast, uiRef.contrastLevel);
         }
 
         private void tB_Brightness_TextChanged(object sender, EventArgs e) {
-            uiScript.KeepUpdated(tB_Brightness, slider_Brightness, uiScript.brightLevel);
+            uiRef.KeepUpdated(tB_Brightness, slider_Brightness, uiRef.brightLevel);
         }
 
         private void tB_DDE_TextChanged(object sender, EventArgs e) {
-            uiScript.KeepUpdated(tB_DDE, slider_DDE, uiScript.ddeLevel);
+            uiRef.KeepUpdated(tB_DDE, slider_DDE, uiRef.ddeLevel);
+        }
+
+        private void tB_Zoom_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter)
+                CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
         }
 
         private void tB_Contrast_KeyDown(object sender, KeyEventArgs e) {
             if(e.KeyCode == Keys.Enter)
-                CameraCommands.ChangeContrast(uiScript.contrastLevel);
+                CameraCommands.ChangeContrast(uiRef.contrastLevel);
         }
 
         private void tB_Brightness_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter)
-                CameraCommands.ChangeBrightness(uiScript.brightLevel);
+                CameraCommands.ChangeBrightness(uiRef.brightLevel);
         }
 
         private void tB_DDE_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter)
-                CameraCommands.ChangeDDELevel(uiScript.ddeLevel);
+                CameraCommands.ChangeDDELevel(uiRef.ddeLevel);
         }
+
 
     }
 }

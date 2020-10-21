@@ -16,12 +16,15 @@ namespace DeploymentSoftware {
             string valueCode = code.Substring(0, 2);
             num1 = int.Parse(valueCode, System.Globalization.NumberStyles.HexNumber);
 
+
             if (doubleValue) {
                 string valueCode2 = code.Substring(2, 2);
                 num2 = int.Parse(valueCode2, System.Globalization.NumberStyles.HexNumber);
                 if (num1 > 0) {
                     num1 = 255;
                 }
+                MessageBox.Show(code + " 1: " + num1.ToString() + " 2: " + num2.ToString() + "\n" + (num1 + num2).ToString());
+
             }
             int total = num1 + num2;
 

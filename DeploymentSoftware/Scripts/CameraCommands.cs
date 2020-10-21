@@ -113,6 +113,72 @@ namespace DeploymentSoftware {
             uiRef.UpdateUI();
         }
 
+        public static void ChangeZoomLevel(int zoom) {
+            byte[] code = QuickFindZoom(zoom);
+
+            CameraCommunicate.SendToSocket(code);
+
+            uiRef.digitalZoom = zoom;
+        }
+
+
+        static byte[] QuickFindZoom(int zoom) {
+
+            byte[] code = new byte[17];
+
+            switch (zoom) {
+                case 0:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x7F , 0x02 , 0xFF , 0x01 , 0x63 , 0xEB , 0xAA };
+                    break;
+                case 1:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0x6B , 0x00 , 0x55 , 0x00 , 0x14 , 0x02 , 0xA9 , 0x01 , 0x62 , 0xEB , 0xAA };
+                    break;
+                case 2:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA0 , 0x00 , 0x80 , 0x00 , 0xDF , 0x01 , 0x7F , 0x01 , 0x62 , 0xEB , 0xAA };
+                    break;
+                case 3:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xC0 , 0x00 , 0x9A , 0x00 , 0xBF , 0x01 , 0x65 , 0x01 , 0x62 , 0xEB , 0xAA };
+                    break;
+                case 4:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xD5 , 0x00 , 0xAB , 0x00 , 0xA9 , 0x01 , 0x54 , 0x01 , 0x61 , 0xEB , 0xAA };
+                    break;
+                case 5:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xE5 , 0x00 , 0xB7 , 0x00 , 0x9A , 0x01 , 0x48 , 0x01 , 0x62 , 0xEB , 0xAA };
+                    break;
+                case 6:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xF0 , 0x00 , 0xC0 , 0x00 , 0x8F , 0x01 , 0x3F , 0x01 , 0x62 , 0xEB , 0xAA };
+                    break;
+                case 7:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0x95 , 0x00 , 0x70 , 0x00 , 0xE9 , 0x00 , 0xAF , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 8:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0x9A , 0x00 , 0x73 , 0x00 , 0xE5 , 0x00 , 0xAB , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 9:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0x9D , 0x00 , 0x76 , 0x00 , 0xE1 , 0x00 , 0xA9 , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 10:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA0 , 0x00 , 0x78 , 0x00 , 0xDF , 0x00 , 0xA7 , 0x00 , 0x80 , 0xEB , 0xAA };
+                    break;
+                case 11:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA2 , 0x00 , 0x7A , 0x00 , 0xDC , 0x00 , 0xA5 , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 12:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA5 , 0x00 , 0x7B , 0x00 , 0xDA , 0x00 , 0xA3 , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 13:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA6 , 0x00 , 0x7D , 0x00 , 0xD8 , 0x00 , 0xA2 , 0x00 , 0x7F , 0xEB , 0xAA };
+                    break;
+                case 14:
+                    code = new byte[] { 0xAA , 0x0D , 0x00 , 0x2A , 0x01 , 0x00 , 0xA8 , 0x00 , 0x7E , 0x00 , 0xD7 , 0x00 , 0xA1 , 0x00 , 0x80 , 0xEB , 0xAA };
+                    break;
+            }
+
+            return code;
+        }
+
+
+
         public static void ChangeContrast(int contrast) { //WORKING
             byte contrastInByte = (byte)MathStuff.ConvertToHex(contrast);
             int checksum = 0;
@@ -135,8 +201,6 @@ namespace DeploymentSoftware {
                 val1 = 1;
                 val2 = val2 - 255;
             }
-            ////CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x06, 0x00, 0x3C, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x01, 0x1A, 0xEB, 0xAA });
-            //MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, (byte)MathStuff.ConvertToHex(val1), (byte)MathStuff.ConvertToHex(val2), 0x1A, 0xEB, 0xAA }).Result);
 
             byte val1Byte = (byte)MathStuff.ConvertToHex(val1);
             byte val2Byte = (byte)MathStuff.ConvertToHex(val2);
@@ -148,16 +212,12 @@ namespace DeploymentSoftware {
             checksum = checksum % 256;
 
             byte[] code = new byte[] { 0xAA, 0x06, 0x00, 0x3C, 0x01, val2Byte, val1Byte, (byte)MathStuff.ConvertToHex(checksum), 0xEB, 0xAA };
-            CameraCommunicate.GetResponseManual(code);
+            MessageBox.Show(val2Byte.ToString() + " " + val2Byte.ToString() + " " + MathStuff.ConvertToHex(checksum).ToString());
+            MessageBox.Show(CameraCommunicate.GetResponseManual(code).Result);
 
         }
 
         public static void ChangeDDELevel(int DDE) {
-            ////CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE), 0xF2, 0xEB, 0xAA });
-
-            //MessageBox.Show(CameraCommunicate.GetResponseManual(new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, (byte)MathStuff.ConvertToHex(DDE),
-            //    (byte)MathStuff.ConvertToHex(((170 + 6 + 60 + 1 + DDE)%256)), 0xEB, 0xAA }).Result);
-
             byte DDEInByte = (byte)MathStuff.ConvertToHex(DDE);
             int checksum = 0;
             byte[] checksumWithoutVal = new byte[] { 0xAA, 0x05, 0x00, 0x3F, 0x01, DDEInByte };
@@ -185,7 +245,7 @@ namespace DeploymentSoftware {
         public static async Task GetCameraStuff() {
 
             if (CameraCommunicate.sock.Connected) { 
-                //CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x01, 0x3D, 0x02, 0x01, 0xF0, 0xEB, 0xAA }); //enables analogue video
+                CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x01, 0x3D, 0x02, 0x01, 0xF0, 0xEB, 0xAA }); //enables analogue video
 
                 SendCommand(contra);
                 uiRef.contrastLevel = contra.iValue;
@@ -211,7 +271,6 @@ namespace DeploymentSoftware {
                 //SendCommand(agcO, true);
                 //uiRef.agcOn = agcO.bValue;
 
-                //uiRef.agcOn = MathStuff.ConvertToBool(CameraCommunicate.GetResponse(, 5, 9).Result); //not working
             }
         }
 
