@@ -57,10 +57,12 @@ namespace DeploymentSoftware {
 
         private void b_DDEOn_Click(object sender, EventArgs e) {
             CameraCommands.DDEState(true);
+            uiRef.UpdateUI();
         }
 
         private void b_DDEOff_Click(object sender, EventArgs e) {
             CameraCommands.DDEState(false);
+            uiRef.UpdateUI();
         }
 
         private void cB_Palette_SelectedValueChanged (object sender, EventArgs e) {
@@ -99,34 +101,28 @@ namespace DeploymentSoftware {
         }
 
         private void slider_Zoom_MouseUp(object sender, MouseEventArgs e) {
-            uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom, true);
+            int digitOne = Convert.ToInt32(Math.Floor((double)(slider_Zoom.Value / 100))) * 100;
+            int withoutHundred = slider_Zoom.Value - digitOne;
+            if (withoutHundred > 25 && withoutHundred < 75) {
+                slider_Zoom.Value = digitOne + 50;
+            } else if (withoutHundred > 75) {
+                slider_Zoom.Value = digitOne + 100;
+            } else if (withoutHundred < 25) {
+                slider_Zoom.Value = digitOne;
+            }
+
+            uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom);
             CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
         }
-
-        private void tB_Zoom_TextChanged(object sender, EventArgs e) {
-            uiRef.KeepUpdated(tB_Zoom, slider_Zoom, uiRef.digitalZoom, true);
-        }
-
-        private void tB_Contrast_TextChanged(object sender, EventArgs e) {
-            uiRef.KeepUpdated(tB_Contrast, slider_Contrast, uiRef.contrastLevel);
-        }
-
-        private void tB_Brightness_TextChanged(object sender, EventArgs e) {
-            uiRef.KeepUpdated(tB_Brightness, slider_Brightness, uiRef.brightLevel);
-        }
-
-        private void tB_DDE_TextChanged(object sender, EventArgs e) {
-            uiRef.KeepUpdated(tB_DDE, slider_DDE, uiRef.ddeLevel);
-        }
-
         private void tB_Zoom_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter)
-                uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom, true);
+            if (e.KeyCode == Keys.Enter) {
+                uiRef.digitalZoom = uiRef.ChangeVal(slider_Zoom, tB_Zoom, uiRef.digitalZoom);
                 CameraCommands.ChangeZoomLevel(uiRef.digitalZoom);
+            }
         }
 
         private void tB_Contrast_KeyDown(object sender, KeyEventArgs e) {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
                 CameraCommands.ChangeContrast(uiRef.contrastLevel);
         }
 
@@ -140,5 +136,40 @@ namespace DeploymentSoftware {
                 CameraCommands.ChangeDDELevel(uiRef.ddeLevel);
         }
 
+        private void tB_Zoom_TextChanged(object sender, EventArgs e) {
+            uiRef.KeepUpdated(tB_Zoom, slider_Zoom, uiRef.digitalZoom);
+        }
+
+        private void tB_Contrast_TextChanged(object sender, EventArgs e) {
+            uiRef.KeepUpdated(tB_Contrast, slider_Contrast, uiRef.contrastLevel);
+        }
+
+        private void tB_Brightness_TextChanged(object sender, EventArgs e) {
+            uiRef.KeepUpdated(tB_Brightness, slider_Brightness, uiRef.brightLevel);
+        }
+
+        private void tB_DDE_TextChanged(object sender, EventArgs e) {
+            uiRef.KeepUpdated(tB_DDE, slider_DDE, uiRef.ddeLevel);
+        }
+        
+        private void slider_Zoom_Scroll(object sender, EventArgs e) {
+            tB_Zoom.Text = slider_Zoom.Value.ToString();
+        }
+
+        private void slider_Contrast_Scroll(object sender, EventArgs e) {
+            tB_Contrast.Text = slider_Contrast.Value.ToString();
+        }
+
+        private void slider_Brightness_Scroll(object sender, EventArgs e) {
+            tB_Brightness.Text = slider_Brightness.Value.ToString();
+        }
+
+        private void slider_DDE_Scroll(object sender, EventArgs e) {
+            tB_DDE.Text = slider_DDE.Value.ToString();
+        }
+
+        private void slider_Zoom_ValueChanged(object sender, EventArgs e) {
+
+        }
     }
 }

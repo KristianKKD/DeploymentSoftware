@@ -32,16 +32,27 @@ namespace DeploymentSoftware {
             mainRef.slider_Contrast.Value = contrastLevel;
             mainRef.slider_DDE.Value = ddeLevel;
 
-            mainRef.slider_Zoom.Value = digitalZoom / 50;
 
             mainRef.tB_Brightness.Text = brightLevel.ToString();
             mainRef.tB_Contrast.Text = contrastLevel.ToString();
             mainRef.tB_DDE.Text = ddeLevel.ToString();
 
-            mainRef.tB_Zoom.Text = (digitalZoom / 100f).ToString();
+            //double dZoom = Math.Round((double)digitalZoom / (double)50.0);
+            //int dZoomSlider = Convert.ToInt32(dZoom);
 
-            if(digitalZoom / 100f < 1)
-                mainRef.tB_Zoom.Text = (digitalZoom / 2f).ToString();
+            ////int.TryParse((digitalZoom / 50).ToString(), out int dZoomSlider);
+            //float.TryParse((dZoomSlider / 2f).ToString(), out float dZoomFloat);
+
+            //mainRef.slider_Zoom.Value = dZoomSlider;
+
+            //if (digitalZoom / 100f < 1) {
+            //    mainRef.tB_Zoom.Text = (dZoomFloat * 50f).ToString();
+            //} else {
+            //    mainRef.tB_Zoom.Text = dZoomFloat.ToString();
+            //}
+            mainRef.slider_Zoom.Value = digitalZoom;
+            mainRef.tB_Zoom.Text = digitalZoom.ToString() + "%";
+
 
             switch (paletteMode) {
                 case 0:
@@ -135,47 +146,62 @@ namespace DeploymentSoftware {
                 );
         }
 
-        public void KeepUpdated(TextBox tb, TrackBar slider, int variable, bool halfIt = false) {
-            
-            if (tb.Text == "") {
-                return;
-            }
+        public void KeepUpdated(TextBox tb, TrackBar slider, int variable) {
 
-            if (halfIt) {
-                bool success = float.TryParse(tb.Text, out float convertedFloat);
+            NotMax(slider, tb);
 
-                if (success && convertedFloat > -1 && convertedFloat < 8f + 1) {
-                    slider.Value = Convert.ToInt32(convertedFloat * 2);
-                } else {
-                    tb.Text = variable.ToString();
-                }
-            }
-            else { 
+
+            //if (halfIt) {
+            //    bool success = float.TryParse(tb.Text, out float convertedFloat);
+
+            //    if (success && convertedFloat > -1 && convertedFloat < 8f + 1) {
+            //        if (convertedFloat % 0.5 != 0) {
+            //            slider.Value = Convert.ToInt32(Math.Round(convertedFloat) * 2);
+            //        } else {
+            //            slider.Value = Convert.ToInt32(convertedFloat * 2);
+            //        }
+            //    } else {
+            //        tb.Text = variable.ToString();
+            //    }
+            //} else {
+
                 bool success = int.TryParse(tb.Text, out int converted);
 
                 if (success && converted > -1 && converted < slider.Maximum + 1) {
                     slider.Value = converted;
                 } else {
+                if (tb == mainRef.tB_Zoom) {
+                    tb.Text = variable.ToString() + "%";
+                } else {
                     tb.Text = variable.ToString();
                 }
             }
+        //}
         }
 
-        public int ChangeVal(TrackBar slider, TextBox tb, int copyVar, bool half = false) {
+        public int ChangeVal(TrackBar slider, TextBox tb, int copyVar) {
+
+            NotMax(slider, tb);
 
             if (slider.Value != copyVar) {
                 copyVar = slider.Value;
             }
 
-            if (half) {
-                tb.Text = (copyVar/2f).ToString();
-            }
-            else {
-                tb.Text = copyVar.ToString();
-            }
-
-
             return copyVar;
+        }
+
+        void NotMax(TrackBar slider, TextBox tb) {
+            bool working = float.TryParse(tb.Text, out float parsed);
+            
+            if (!working) {
+                return;
+            }
+
+            if (parsed > slider.Maximum) {
+                tb.Text = slider.Maximum.ToString();
+            } else if (parsed < slider.Minimum) {
+                tb.Text = slider.Minimum.ToString();
+            }
         }
 
         public void ShowExtended() {

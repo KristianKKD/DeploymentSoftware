@@ -37,7 +37,6 @@
             this.p_Control = new System.Windows.Forms.Panel();
             this.tB_Zoom = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.slider_Zoom = new System.Windows.Forms.TrackBar();
             this.b_DDEOff = new System.Windows.Forms.Button();
             this.b_DDEOn = new System.Windows.Forms.Button();
             this.tB_DDE = new System.Windows.Forms.TextBox();
@@ -56,6 +55,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cB_Palette = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.slider_Zoom = new System.Windows.Forms.TrackBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.b_Play = new System.Windows.Forms.Button();
@@ -79,10 +79,10 @@
             this.VLCPlayer = new AxAXVLC.AxVLCPlugin2();
             this.panel2.SuspendLayout();
             this.p_Control.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_DDE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Brightness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Contrast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.p_Extended.SuspendLayout();
@@ -227,18 +227,6 @@
             this.label19.TabIndex = 31;
             this.label19.Text = "Digital Zoom:";
             // 
-            // slider_Zoom
-            // 
-            this.slider_Zoom.Location = new System.Drawing.Point(170, 122);
-            this.slider_Zoom.Maximum = 16;
-            this.slider_Zoom.Minimum = 2;
-            this.slider_Zoom.Name = "slider_Zoom";
-            this.slider_Zoom.Size = new System.Drawing.Size(145, 45);
-            this.slider_Zoom.TabIndex = 30;
-            this.slider_Zoom.TickFrequency = 2;
-            this.slider_Zoom.Value = 2;
-            this.slider_Zoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_Zoom_MouseUp);
-            // 
             // b_DDEOff
             // 
             this.b_DDEOff.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -287,6 +275,7 @@
             this.slider_DDE.Name = "slider_DDE";
             this.slider_DDE.Size = new System.Drawing.Size(145, 45);
             this.slider_DDE.TabIndex = 27;
+            this.slider_DDE.Scroll += new System.EventHandler(this.slider_DDE_Scroll);
             this.slider_DDE.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_DDE_MouseUp);
             // 
             // tB_Brightness
@@ -315,6 +304,7 @@
             this.slider_Brightness.Name = "slider_Brightness";
             this.slider_Brightness.Size = new System.Drawing.Size(143, 45);
             this.slider_Brightness.TabIndex = 24;
+            this.slider_Brightness.Scroll += new System.EventHandler(this.slider_Brightness_Scroll);
             this.slider_Brightness.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_Brightness_MouseUp);
             // 
             // tB_Contrast
@@ -343,6 +333,7 @@
             this.slider_Contrast.Name = "slider_Contrast";
             this.slider_Contrast.Size = new System.Drawing.Size(145, 45);
             this.slider_Contrast.TabIndex = 21;
+            this.slider_Contrast.Scroll += new System.EventHandler(this.slider_Contrast_Scroll);
             this.slider_Contrast.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_Contrast_MouseUp);
             // 
             // cB_AGC
@@ -433,6 +424,20 @@
             this.label5.Size = new System.Drawing.Size(81, 25);
             this.label5.TabIndex = 6;
             this.label5.Text = "Control";
+            // 
+            // slider_Zoom
+            // 
+            this.slider_Zoom.Location = new System.Drawing.Point(170, 122);
+            this.slider_Zoom.Maximum = 800;
+            this.slider_Zoom.Minimum = 100;
+            this.slider_Zoom.Name = "slider_Zoom";
+            this.slider_Zoom.Size = new System.Drawing.Size(145, 45);
+            this.slider_Zoom.SmallChange = 50;
+            this.slider_Zoom.TabIndex = 30;
+            this.slider_Zoom.Value = 100;
+            this.slider_Zoom.Scroll += new System.EventHandler(this.slider_Zoom_Scroll);
+            this.slider_Zoom.ValueChanged += new System.EventHandler(this.slider_Zoom_ValueChanged);
+            this.slider_Zoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_Zoom_MouseUp);
             // 
             // pictureBox1
             // 
@@ -677,10 +682,10 @@
             this.panel2.PerformLayout();
             this.p_Control.ResumeLayout(false);
             this.p_Control.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_DDE)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Brightness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_Contrast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_Zoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
