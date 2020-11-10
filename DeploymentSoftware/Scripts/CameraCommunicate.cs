@@ -78,24 +78,18 @@ namespace DeploymentSoftware{
 
             try {
                 byte[] buffer = new byte[c.length];
-                Receive(sock, buffer, 0, buffer.Length, 1000);
+                Receive(sock, buffer, 0, buffer.Length, 500);
                 string msg = "";
-                //if (target != 0) {
-                //    msg = MathStuff.ByteToHex(buffer[target]);
-                //    if (twoByte) {
-                //        msg += "," + MathStuff.ByteToHex(buffer[target + 1]);
-                //    }
-                //} else {
                 for (int i = 0; i < buffer.Length; i++) {
                     msg += MathStuff.ByteToHex(buffer[i]) + " ";
                 }
-                //}
+
 
                 if (msg == "") {
                     msg = "Couldn't get a response";
                 }
+                Console.WriteLine(msg);
 
-                //MessageBox.Show(msg);
 
                 return msg;
             } catch (Exception e) {
