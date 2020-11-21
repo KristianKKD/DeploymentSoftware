@@ -39,18 +39,15 @@ namespace DeploymentSoftware {
         }
 
         private void b_Connect_Click(object sender, EventArgs e) {
-            Do();
-        }
-
-        async Task Do() {
-            await GetData();
             playScript.Play(tB_IP.Text);
+            GetData();
         }
 
         async Task GetData() {
             if (!CameraCommunicate.sock.Connected) {
                 await CameraCommunicate.Connect(tB_IP.Text, cB_Port.Text);
             }
+            await Task.Delay(300);
             await CameraCommands.GetCameraStuff();
             uiRef.UpdateUI();
         }

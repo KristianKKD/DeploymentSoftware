@@ -47,7 +47,7 @@ namespace DeploymentSoftware {
             switch (selected) {
                 case "No Flip":
                     code = new byte[] { 0xAA, 0x05, 0x00, 0x30, 0x01, 0x01, 0xE1, 0xEB, 0xAA };
-                    uiRef.flipMode = 8;
+                    uiRef.flipMode = 1;
                     break;
                 case "Left - Right Flip":
                     code = new byte[] { 0xAA, 0x05, 0x00, 0x30, 0x01, 0x02, 0xE2, 0xEB, 0xAA };
@@ -59,7 +59,7 @@ namespace DeploymentSoftware {
                     break;
                 case "Mirror Flip":
                     code = new byte[] { 0xAA, 0x05, 0x00, 0x30, 0x01, 0x08, 0xE8, 0xEB, 0xAA };
-                    uiRef.flipMode = 1;
+                    uiRef.flipMode = 8;
                     break;
             }
 
@@ -233,56 +233,80 @@ namespace DeploymentSoftware {
         static Com flipM = new Com(Com.flipModeCommand, Com.flipModeResponse, 10);
         static Com agcM = new Com(Com.agcModeCommand, Com.agcModeResponse, 9);
         static Com ddeL = new Com(Com.ddeLevelCommand, Com.ddeLevelResponse, 9);
-        static Com ddeO = new Com(Com.ddeStateCommand, Com.ddeOnResponse, 9);
-        static Com agcO = new Com(Com.agcOnCommand, Com.agcOnResponse, 9);
+        static Com ddeO = new Com(Com.ddeStateCommand, Com.ddeOnResponse, 9, false, 0, false, true);
+        //static Com agcO = new Com(Com.agcOnCommand, Com.agcOnResponse, 9);
         static Com zoomR = new Com(Com.readZoom, Com.readZoomResonse, 9, true);
-
-        static bool failed = false;
 
         public static async Task GetCameraStuff() {
 
-            if (CameraCommunicate.sock.Connected) {
-                CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x01, 0x3D, 0x02, 0x01, 0xF0, 0xEB, 0xAA }); //enables analogue video
-                
-                failed = true;
-                int retryCount = 0;
-                while (failed && retryCount < 3) {
-                    failed = false;
-                    
-                    SendCommand(contra);
+            try {
+                List<Com> activeList = new List<Com>() {
+                    bright, palM, flipM, agcM, ddeL, ddeO, zoomR
+                };
+                List<Com> retryList = new List<Com>();
+
+
+                if (!CheckCanCom()) {
+                    MessageBox.Show("Failed to receive a response!");
+                    return;
+                }
+
+
+                if (CameraCommunicate.sock.Connected) {
+                    CameraCommunicate.SendToSocket(new byte[] { 0xAA, 0x05, 0x01, 0x3D, 0x02, 0x01, 0xF0, 0xEB, 0xAA }); //enables analogue video
+
+                    foreach(Com c in activeList) {
+                        if (SendCommand(c).Result.fail) {
+                            retryList.Add(c);
+                        }
+                    }
+
+
+                    for (int tryCount = 0; retryList.Count > 0; tryCount++) {
+                        if (tryCount == 4) {
+                            MessageBox.Show("Failed to collect data, make sure the camera is on and connected!" +
+                                "\nYou can retry to collect the data by pressing Connect again.");
+                            break;
+                        }
+
+                        List<Com> removeList = new List<Com>();
+                        foreach (Com retry in retryList) {
+                            if (!SendCommand(retry).Result.fail) {
+                                removeList.Add(retry);
+                            }
+                        }
+                        foreach (Com rem in removeList) {
+                            retryList.Remove(rem);
+                        }
+                    }
+
                     uiRef.contrastLevel = contra.iValue;
-
-                    SendCommand(bright);
                     uiRef.brightLevel = bright.iValue;
-
-                    SendCommand(palM);
                     uiRef.paletteMode = palM.iValue;
-
-                    SendCommand(flipM);
                     uiRef.flipMode = flipM.iValue;
-
-                    SendCommand(agcM);
                     uiRef.agcMode = agcM.iValue;
-
-                    SendCommand(ddeL);
                     uiRef.ddeLevel = ddeL.iValue;
-
-                    SendCommand(ddeO, true);
                     uiRef.ddeOn = ddeO.bValue;
-
-                    SendCommand(zoomR);
                     uiRef.digitalZoom = zoomR.iValue;
 
-                    if (failed) {
-                        retryCount++;
-                    }
                 }
-                if(retryCount >= 3)
-                    MessageBox.Show("Failed to collect data, make sure the camera is on and connected!" +
-                        "\nYou can retry to collect the data by pressing Connect again.");
+            }catch(Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
+
+        static bool CheckCanCom() {
+            bool canCommunicate = false;
+            for(int i = 0; i < 3; i++) {
+                if (!SendCommand(contra).Result.fail) {
+                    canCommunicate = true;
+                    break;
+                }
+            }
+
+            return canCommunicate;
+        }
 
         public static async Task<Com> SendCommand(Com command, bool isBoolType = false) {
             string expected = PerfectFormat(command).Result.ToUpper();
@@ -294,8 +318,8 @@ namespace DeploymentSoftware {
 
             while (!isGood) {
                 savedWrongCount++;
-                if (savedWrongCount > 3) {
-                    failed = true;
+                if (savedWrongCount > 10) {
+                    command.fail = true;
                     break;
                 }
 

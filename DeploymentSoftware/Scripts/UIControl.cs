@@ -37,19 +37,6 @@ namespace DeploymentSoftware {
             mainRef.tB_Contrast.Text = contrastLevel.ToString();
             mainRef.tB_DDE.Text = ddeLevel.ToString();
 
-            //double dZoom = Math.Round((double)digitalZoom / (double)50.0);
-            //int dZoomSlider = Convert.ToInt32(dZoom);
-
-            ////int.TryParse((digitalZoom / 50).ToString(), out int dZoomSlider);
-            //float.TryParse((dZoomSlider / 2f).ToString(), out float dZoomFloat);
-
-            //mainRef.slider_Zoom.Value = dZoomSlider;
-
-            //if (digitalZoom / 100f < 1) {
-            //    mainRef.tB_Zoom.Text = (dZoomFloat * 50f).ToString();
-            //} else {
-            //    mainRef.tB_Zoom.Text = dZoomFloat.ToString();
-            //}
             mainRef.slider_Zoom.Value = digitalZoom;
             mainRef.tB_Zoom.Text = digitalZoom.ToString() + "%";
 
@@ -80,19 +67,19 @@ namespace DeploymentSoftware {
                     mainRef.cB_Palette.SelectedIndex = 4;
                     break;
                 default:
-                    mainRef.cB_Palette.SelectedIndex = mainRef.cB_Palette.Items.Count - 1;
+                    mainRef.cB_Palette.SelectedIndex = mainRef.cB_Palette.Items.Count;
                     break;
             }
 
             switch (flipMode) {
-                case 8:
+                case 1:
                     mainRef.cB_Flip.SelectedIndex = 0;
                     break;
-                case 1:
+                case 8:
                     mainRef.cB_Flip.SelectedIndex = 1;
                     break;
                 default:
-                    mainRef.cB_Flip.SelectedIndex = mainRef.cB_Flip.Items.Count - 1;
+                    mainRef.cB_Flip.SelectedIndex = mainRef.cB_Flip.Items.Count;
                     break;
             }
 
@@ -116,7 +103,7 @@ namespace DeploymentSoftware {
                     mainRef.cB_AGC.SelectedIndex = 2;
                     break;
                 default:
-                    mainRef.cB_AGC.SelectedIndex = mainRef.cB_AGC.Items.Count - 1;
+                    mainRef.cB_AGC.SelectedIndex = mainRef.cB_AGC.Items.Count;
                     break;
             }
 
@@ -150,21 +137,6 @@ namespace DeploymentSoftware {
 
             NotMax(slider, tb);
 
-
-            //if (halfIt) {
-            //    bool success = float.TryParse(tb.Text, out float convertedFloat);
-
-            //    if (success && convertedFloat > -1 && convertedFloat < 8f + 1) {
-            //        if (convertedFloat % 0.5 != 0) {
-            //            slider.Value = Convert.ToInt32(Math.Round(convertedFloat) * 2);
-            //        } else {
-            //            slider.Value = Convert.ToInt32(convertedFloat * 2);
-            //        }
-            //    } else {
-            //        tb.Text = variable.ToString();
-            //    }
-            //} else {
-
                 bool success = int.TryParse(tb.Text, out int converted);
 
                 if (success && converted > -1 && converted < slider.Maximum + 1) {
@@ -176,7 +148,6 @@ namespace DeploymentSoftware {
                     tb.Text = variable.ToString();
                 }
             }
-        //}
         }
 
         public int ChangeVal(TrackBar slider, TextBox tb, int copyVar) {

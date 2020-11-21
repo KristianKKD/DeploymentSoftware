@@ -31,7 +31,7 @@ namespace DeploymentSoftware{
             try {
                 serverAddr = IPAddress.Parse(ipAdr);
                 sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
+                endPoint = new IPEndPoint(serverAddr, checkedPort);
                 sock.Connect(endPoint);
                 uiRef.IsConnected();
             } catch (Exception e) {
@@ -43,6 +43,7 @@ namespace DeploymentSoftware{
             SendToSocket(code, true);
 
             if (!sock.Connected) {
+                Console.WriteLine("Not connected manual");
                 return null;
             }
 
@@ -66,36 +67,27 @@ namespace DeploymentSoftware{
         }
 
             public static async Task<string> GetResponse(Com c) {
-            SendToSocket(c.sendCommand, true);
+            bool b = SendToSocket(c.sendCommand, true).Result;
+
 
             if (!sock.Connected) {
+                Console.WriteLine("Not connected");
                 return null;
             }
-
-            //if (c.duoVal) {
-            //    target = target - 20;
-            //}
 
             try {
                 byte[] buffer = new byte[c.length];
                 Receive(sock, buffer, 0, buffer.Length, 1000);
                 string msg = "";
-                //if (target != 0) {
-                //    msg = MathStuff.ByteToHex(buffer[target]);
-                //    if (twoByte) {
-                //        msg += "," + MathStuff.ByteToHex(buffer[target + 1]);
-                //    }
-                //} else {
                 for (int i = 0; i < buffer.Length; i++) {
                     msg += MathStuff.ByteToHex(buffer[i]) + " ";
                 }
-                //}
 
                 if (msg == "") {
                     msg = "Couldn't get a response";
                 }
+                Console.WriteLine(msg);
 
-                //MessageBox.Show(msg);
 
                 return msg;
             } catch (Exception e) {
@@ -140,8 +132,6 @@ namespace DeploymentSoftware{
         }
 
         public static async Task<bool> SendToSocket(byte[] code, bool noUpdate = false) {
-            //UpdateUI();
-
             if (!sock.Connected) {
                 uiRef.NotConnected();
                 return false;
@@ -149,8 +139,9 @@ namespace DeploymentSoftware{
 
             if (code != null) {
                 sock.SendTo(code, endPoint);
-                if(!noUpdate)
-                uiRef.UpdateUI();
+                if (!noUpdate) {
+                    uiRef.UpdateUI();
+                }
                 return true;
             }
             return false;

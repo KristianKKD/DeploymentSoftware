@@ -11,7 +11,7 @@ namespace DeploymentSoftware {
 
         public static Main mainRef;
 
-        public async Task Play(string ConnectIP = "") {
+        public void Play(string ConnectIP = "") {
             string combinedUrl;
             
             if (ConnectIP != "") {

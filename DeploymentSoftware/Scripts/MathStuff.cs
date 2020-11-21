@@ -13,6 +13,10 @@ namespace DeploymentSoftware {
             int num1 = 0;
             int num2 = 0;
 
+            if(code.Length < 1) {
+                return 0;
+            }
+
             string valueCode = code.Substring(0, 2);
             num1 = int.Parse(valueCode, System.Globalization.NumberStyles.HexNumber);
 

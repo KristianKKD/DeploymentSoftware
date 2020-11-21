@@ -45,14 +45,18 @@ namespace DeploymentSoftware {
         public bool duoVal;
         public byte[] sendCommand;
         public string[] returnCommand;
+        public bool isBoolType;
+        public bool fail;
 
-        public Com(byte[] sendByteArray, string[] returnByteArray, int l, bool duo = false, int iv = 0, bool bv = false) {
+        public Com(byte[] sendByteArray, string[] returnByteArray, int l, bool duo = false, int iv = 0, bool bv = false, bool boolType = false) {
             iValue = iv;
             bValue = bv;
             length = l;
             duoVal = duo;
             sendCommand = sendByteArray;
             returnCommand = returnByteArray;
+            isBoolType = boolType;
+            fail = false;
         }
 
     }
